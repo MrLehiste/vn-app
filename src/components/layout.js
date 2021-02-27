@@ -1,6 +1,8 @@
 import React from "react"
 import { css } from "@emotion/react"
 import { useStaticQuery, Link, graphql } from "gatsby"
+import LoginButton from "../components/loginbutton"
+import LogoutButton from "../components/logoutbutton"
 
 import { rhythm } from "../utils/typography"
 export default function Layout({ children }) {
@@ -35,14 +37,12 @@ export default function Layout({ children }) {
           {data.site.siteMetadata.title}
         </h3>
       </Link>
-      <Link
-        to={`/about/`}
-        css={css`
-          float: right;
-        `}
-      >
-        About
-      </Link>
+      <nav css={css`float: right;`}>
+        <LoginButton />&nbsp;&nbsp;
+        <LogoutButton />&nbsp;&nbsp;
+        <Link to={`/profile/`}>Profile</Link>&nbsp;&nbsp;
+        <Link to={`/about/`}>About</Link>
+      </nav>
       {children}
     </div>
   )

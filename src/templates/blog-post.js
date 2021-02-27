@@ -3,23 +3,24 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import ReactPlayer from 'react-player/file'
 import { css } from "@emotion/react"
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
-export default function BlogPost({ data }) {
-  const post = data.markdownRemark
-  return (
+const BlogPost = ({ data }) => (
+  
     <Layout>
       <div>
-        <h1>{post.frontmatter.title}</h1>
-        <img src={post.frontmatter.image} alt={post.frontmatter.title} width="400px" height="400px" css={css`margin-bottom: 0px;`} />
+        <h1>{data.markdownRemark.frontmatter.title}</h1>
+        <img src={data.markdownRemark.frontmatter.image} alt={data.markdownRemark.frontmatter.title} width="400px" height="400px" css={css`margin-bottom: 0px;`} />
         <ReactPlayer forceAudio playing width="400px" height="60px" css={css`margin-bottom: 20px;`}
           controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
-          url={post.frontmatter.mp3}
+          url={data.markdownRemark.frontmatter.mp3}
         />
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+        <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
       </div>
     </Layout>
-  )
-}
+)
+
+export default withAuthenticationRequired(BlogPost)
 
 export const query = graphql`
   query($slug: String!) {
